@@ -7,13 +7,13 @@ module GramaticaAbstracta where
 -}
 data Itg  = ItgSim (Func, Func) Func Dif --Integral Simple
 	  | ItgMult (Func, Func) Itg Dif --Integral Multiple
-	deriving (Show, Eq, Ord)
+	deriving ( Eq, Ord)
 
 {-Dif representa el diferencial de una funcion a integrar.
   Es importante porque nos indica el orden de integracion en integrales multiples.
 -}
 data Dif = Dif Char
-	deriving (Show, Eq, Ord)
+	deriving ( Eq, Ord)
 
 {-Func representa un pequeño lenguaje para la gramatica de las funciones.
 -}
@@ -32,4 +32,27 @@ data Func = FConst Double  	--Una constante
 	  | FSec Func		--Funcion Secante
 	  | FCsc Func		--Funcion Cosecante
 	  | FCot Func		--Funcion Cotangente
-	deriving (Show, Eq, Ord)
+	deriving (Eq, Ord)
+
+instance Show Func where
+    show (FConst a) = (show a)
+    show (FVar x) = [x]
+    show (FSum a b) = (show a) ++ "+" ++ (show b)
+    show (FRes a b) = (show a) ++ "-" ++ (show b)
+    show (FMult a b) = (show a) ++ "*" ++ (show b)
+    show (FDiv a b) = (show a) ++ "/" ++ (show b)
+    show (FPot a b) = (show a) ++"^" ++ "(" ++ (show b) ++ ")"
+    show (FExp a) = "E(" ++ (show a) ++ ")"
+    show (FLn a) = "LN(" ++ (show a) ++ ")"
+    show (FSen a) = "Sen(" ++ (show a) ++ ")"
+    show (FCos a) = "Cos(" ++ (show a) ++ ")"
+    show (FTan a) = "Tan(" ++ (show a) ++ ")"
+    show (FSec a) = "Sec(" ++ (show a) ++ ")"
+    show (FCsc a) = "Csc(" ++ (show a) ++ ")"
+    show (FCot a) = "Cot(" ++ (show a) ++ ")"
+
+instance Show Itg where 
+    show(ItgSim (a,b)f d) = "|(" ++(show a)++"," ++ (show b)++") " ++ (show f) ++ (show d)
+
+instance Show Dif where 
+    show (Dif a) = " d" ++ (show a)
